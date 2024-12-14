@@ -22,6 +22,22 @@ def get_db_connection():
     conn = psycopg2.connect(**DB_CONFIG)
     return conn
 
+def create_table():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    # Criação da tabela
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS memories (
+            id SERIAL PRIMARY KEY,
+            content TEXT NOT NULL
+        );
+    """)
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+
 @app.route('/learn', methods=['POST'])
 def learn():
     """
@@ -94,4 +110,5 @@ def analyze():
     return jsonify({"insights": insights})
 
 if __name__ == "__main__":
+    create_table()
     app.run(host='0.0.0.0', port=5000, debug=True)
