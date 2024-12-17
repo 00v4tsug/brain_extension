@@ -78,7 +78,7 @@ def recall():
     context = " ".join(memories)
     prompt = f"Contexto: {context}\n\nPergunta: {query}\nResposta:"
     response = openai.Completion.create(
-        engine="text-davinci-003",
+        engine="gpt-3.5-turbo",
         prompt=prompt,
         max_tokens=150
     )
